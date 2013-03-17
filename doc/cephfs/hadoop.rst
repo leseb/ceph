@@ -13,7 +13,7 @@ These options are intended to be set in the Hadoop configuration file
 |Property             |Value                     |Notes                       |
 |                     |                          |                            |
 +=====================+==========================+============================+
-|fs.default.name      |Ceph URI                  |ceph:///                    |
+|fs.default.name      |Ceph URI                  |ceph://[monaddr:port][/root]|
 |                     |                          |                            |
 |                     |                          |                            |
 +---------------------+--------------------------+----------------------------+
@@ -28,6 +28,26 @@ These options are intended to be set in the Hadoop configuration file
 |                     |                          |                            |
 +---------------------+--------------------------+----------------------------+
 |ceph.root.dir        |Mount root directory      |Default value: /            |
+|                     |                          |                            |
+|                     |                          |                            |
++---------------------+--------------------------+----------------------------+
+|ceph.mon.address     |Monitor address           |host:port                   |
+|                     |                          |                            |
+|                     |                          |                            |
+|                     |                          |                            |
++---------------------+--------------------------+----------------------------+
+|ceph.auth.id         |Ceph user id              |Example: admin              |
+|                     |                          |                            |
+|                     |                          |                            |
+|                     |                          |                            |
++---------------------+--------------------------+----------------------------+
+|ceph.auth.keyfile    |Ceph key file             |                            |
+|                     |                          |                            |
+|                     |                          |                            |
+|                     |                          |                            |
++---------------------+--------------------------+----------------------------+
+|ceph.auth.keyring    |Ceph keyring file         |                            |
+|                     |                          |                            |
 |                     |                          |                            |
 |                     |                          |                            |
 +---------------------+--------------------------+----------------------------+
