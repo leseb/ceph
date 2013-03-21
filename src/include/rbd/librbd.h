@@ -322,6 +322,7 @@ int rbd_aio_wait_for_complete(rbd_completion_t c);
 ssize_t rbd_aio_get_return_value(rbd_completion_t c);
 void rbd_aio_release(rbd_completion_t c);
 int rbd_flush(rbd_image_t image);
+int rbd_aio_flush(rbd_image_t image, rbd_completion_t c);
 
 #ifdef __cplusplus
 }

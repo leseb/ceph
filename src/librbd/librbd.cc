@@ -1060,6 +1060,13 @@ extern "C" int rbd_flush(rbd_image_t image)
   return librbd::flush(ictx);
 }
 
+extern "C" int rbd_aio_flush(rbd_image_t image, rbd_completion_t c)
+{
+  librbd::ImageCtx *ictx = (librbd::ImageCtx *)image;
+  librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;
+  return librbd::aio_flush(ictx, (librbd::AioCompletion *)comp->pc);
+}
+
 extern "C" int rbd_aio_wait_for_complete(rbd_completion_t c)
 {
   librbd::RBD::AioCompletion *comp = (librbd::RBD::AioCompletion *)c;

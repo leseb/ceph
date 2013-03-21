@@ -2463,6 +2463,32 @@ reprotect_and_return_err:
     return 0;
   }
 
+  int aio_flush(ImageCtx *ictx, AioCompletion *c)
+  {
+    CephContext *cct = ictx->cct;
+    ldout(cct, 20) << "aio_flush " << ictx << dendl;
+
+    int r = ictx_check(ictx);
+    if (r < 0)
+      return r;
+
+    if (ictx->object_cacher) {
+      r = 0;
+      c->get();
+      C_AioWrite *req_comp = new C_AioWrite(cct, c);
+      c->add_request();
+      ictx->flush_cache_aio(req_comp);
+      c->finish_adding_requests(cct);
+      c->put();
+    } else {
+      // no async flushing for librados atm
+      r = -EINVAL;
+    }
+    if (r)
+      lderr(cct) << "aio_flush " << ictx << " r = " << r << dendl;
+    return r;
+  }
+
   int flush(ImageCtx *ictx)
   {
     CephContext *cct = ictx->cct;
