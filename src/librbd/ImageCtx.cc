@@ -523,6 +523,8 @@ namespace librbd {
   }
 
   void ImageCtx::flush_cache_aio(Context *onfinish) {
+    if (!onfinish)
+      onfinish = new C_NoopContext();
     cache_lock.Lock();
     object_cacher->flush_set(object_set, onfinish);
     cache_lock.Unlock();
