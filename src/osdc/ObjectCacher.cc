@@ -1498,7 +1498,7 @@ bool ObjectCacher::flush_set(ObjectSet *oset, Context *onfinish)
   assert(lock.is_locked());
   if (oset->objects.empty()) {
     ldout(cct, 10) << "flush_set on " << oset << " dne" << dendl;
-    delete onfinish;
+    onfinish->complete(0);
     return true;
   }
 
@@ -1529,6 +1529,7 @@ bool ObjectCacher::flush_set(ObjectSet *oset, Context *onfinish)
   
   if (safe) {
     ldout(cct, 10) << "flush_set " << oset << " has no dirty|tx bhs" << dendl;
+    onfinish->complete(0);
     return true;
   }
   return false;
@@ -1541,7 +1542,7 @@ bool ObjectCacher::flush_set(ObjectSet *oset, vector<ObjectExtent>& exv, Context
   assert(lock.is_locked());
   if (oset->objects.empty()) {
     ldout(cct, 10) << "flush_set on " << oset << " dne" << dendl;
-    delete onfinish;
+    onfinish->complete(0);
     return true;
   }
 
@@ -1577,6 +1578,7 @@ bool ObjectCacher::flush_set(ObjectSet *oset, vector<ObjectExtent>& exv, Context
   
   if (safe) {
     ldout(cct, 10) << "flush_set " << oset << " has no dirty|tx bhs" << dendl;
+    onfinish->complete(0);
     return true;
   }
   return false;
