@@ -37,6 +37,8 @@ enum {
   l_librbd_aio_discard,
   l_librbd_aio_discard_bytes,
   l_librbd_aio_discard_latency,
+  l_librbd_aio_flush,
+  l_librbd_aio_flush_latency,
 
   l_librbd_snap_create,
   l_librbd_snap_remove,

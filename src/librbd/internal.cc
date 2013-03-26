@@ -2466,7 +2466,7 @@ reprotect_and_return_err:
   int aio_flush(ImageCtx *ictx, AioCompletion *c)
   {
     CephContext *cct = ictx->cct;
-    ldout(cct, 20) << "aio_flush " << ictx << dendl;
+    ldout(cct, 20) << "aio_flush " << ictx << " completion " << c <<  dendl;
 
     int r = ictx_check(ictx);
     if (r < 0)
@@ -2477,9 +2477,11 @@ reprotect_and_return_err:
       c->get();
       C_AioWrite *req_comp = new C_AioWrite(cct, c);
       c->add_request();
+      c->init_time(ictx, AIO_TYPE_FLUSH);
       ictx->flush_cache_aio(req_comp);
       c->finish_adding_requests(cct);
       c->put();
+      ictx->perfcounter->inc(l_librbd_aio_flush);
     } else {
       // no async flushing for librados atm
       r = -EINVAL;

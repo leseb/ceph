@@ -220,6 +220,8 @@ namespace librbd {
     plb.add_u64_counter(l_librbd_aio_discard, "aio_discard");
     plb.add_u64_counter(l_librbd_aio_discard_bytes, "aio_discard_bytes");
     plb.add_time_avg(l_librbd_aio_discard_latency, "aio_discard_latency");
+    plb.add_u64_counter(l_librbd_aio_flush, "aio_flush");
+    plb.add_time_avg(l_librbd_aio_flush_latency, "aio_flush_latency");
     plb.add_u64_counter(l_librbd_snap_create, "snap_create");
     plb.add_u64_counter(l_librbd_snap_remove, "snap_remove");
     plb.add_u64_counter(l_librbd_snap_rollback, "snap_rollback");
