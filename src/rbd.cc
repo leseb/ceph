@@ -72,6 +72,8 @@ static string dir_info_oid = RBD_INFO;
 
 bool udevadm_settle = true;
 
+#define dout_subsys ceph_subsys_rbd
+
 void usage()
 {
   cout << 
@@ -1382,20 +1384,20 @@ static int do_import_diff(librbd::Image &image, const char *path)
       goto done;
 
     if (tag == 'e') {
-      cout << " end diff" << std::endl;
+      dout(2) << " end diff" << dendl;
       break;
     }
     else if (tag == 'f') {
       r = read_string(fd, 128, &from);
       if (r < 0)
 	goto done;
-      cout << " from snap " << from << std::endl;
+      dout(2) << " from snap " << from << dendl;
     }
     else if (tag == 't') {
       r = read_string(fd, 128, &to);
       if (r < 0)
 	goto done;
-      cout << "   to snap " << to << std::endl;
+      dout(2) << "   to snap " << to << dendl;
     }
     else if (tag == 's') {
       uint64_t end_size;
@@ -1410,10 +1412,10 @@ static int do_import_diff(librbd::Image &image, const char *path)
       uint64_t cur_size;
       image.size(&cur_size);
       if (cur_size != end_size) {
-	cout << "resize " << end_size << " -> " << size << std::endl;
+	dout(2) << "resize " << end_size << " -> " << size << dendl;
 	image.resize(end_size);
       } else {
-	cout << "size " << end_size << " (no change)" << std::endl;
+	dout(2) << "size " << end_size << " (no change)" << dendl;
       }
     }
     else if (tag == 'w' || tag == 'z') {
@@ -1435,10 +1437,10 @@ static int do_import_diff(librbd::Image &image, const char *path)
 	  goto done;
 	bufferlist data;
 	data.append(bp);
-	cout << " write " << off << "~" << len << std::endl;
+	dout(2) << " write " << off << "~" << len << dendl;
 	image.write(off, len, data);
       } else if (tag == 'z') {
-	cout << " zero " << off << "~" << len << std::endl;
+	dout(2) << " zero " << off << "~" << len << dendl;
 	image.discard(off, len);
       } else {
 	assert(0);
@@ -1461,7 +1463,7 @@ static int do_import_diff(librbd::Image &image, const char *path)
 
   // take final snap
   if (to.length()) {
-    cout << " create end snap " << to << std::endl;
+    dout(2) << " create end snap " << to << dendl;
     r = image.snap_create(to.c_str());
   }
 
