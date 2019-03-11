@@ -434,6 +434,7 @@ Requires:       python%{_python_buildid}-six
 %if 0%{?fedora} || 0%{?rhel}
 Requires:       python%{_python_buildid}-cherrypy
 Requires:       python%{_python_buildid}-werkzeug
+Requires:       libstoragemgmt
 %endif
 %if 0%{?suse_version}
 Requires:       python%{_python_buildid}-CherryPy
@@ -447,6 +448,7 @@ Recommends:	ceph-mgr-ssh = %{_epoch_prefix}%{version}-%{release}
 %endif
 %if 0%{?rhel} == 7
 Requires:       pyOpenSSL
+Requires:       libstoragemgmt
 %else
 Requires:       python%{_python_buildid}-pyOpenSSL
 %endif
